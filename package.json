@@ -1,0 +1,23 @@
+{
+  "name": "usman-pharmacy-cosmetics-erp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Usman Pharmacy & Cosmetics ERP - Medical Store & Cosmetics Management System. Designed by Saima Mushtaq.",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo Static build ready",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "pharmacy",
+    "erp",
+    "pos",
+    "drap",
+    "fbr",
+    "medicine",
+    "cosmetics",
+    "saima-mushtaq"
+  ],
+  "author": "Saima Mushtaq <saimbakar@gmail.com>",
+  "license": "MIT"
+}

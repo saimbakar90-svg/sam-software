@@ -1,0 +1,27 @@
+/* ===================================================================
+   SUPERSEDED - STYLES MOVED TO main.css
+   Full suppression of any legacy background pseudo-elements
+   =================================================================== */
+
+@import url('main.css');
+
+.app-main::before,
+.app-main::after,
+.app-topbar::before,
+.app-topbar::after,
+.topbar-actions::before,
+.topbar-actions::after,
+.view-header::before,
+.view-header::after,
+#report-output-box::before,
+.modal-dialog::before,
+body::before,
+body::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  background-image: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

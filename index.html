@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="USMAN PHARMACY - Premium Pharmacy, Medical Store & Cosmetics Management ERP in Pakistan. Clinical expiry prevention, DRAP & FBR compliance, smart POS, FEFO batch accounting, and bilingual AI voice assistant.">
+  <title>USMAN PHARMACY — Medical Store & Cosmetics Management ERP</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+  <link rel="apple-touch-icon" href="assets/logo.jpg">
+
+  <!-- Core & Module Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/pos.css">
+  <link rel="stylesheet" href="css/receipt.css">
+  <link rel="stylesheet" href="css/ai.css">
+
+  <!-- Master Responsive Layout & Luxury Transparent Glass Design System -->
+  <style>
+    :root {
+      --sidebar-width: 240px !important;
+      --topbar-height: 64px !important;
+    }
+
+    /* Prevent horizontal spillage & cutting off on all screens */
+    html, body {
+      width: 100% !important;
+      max-width: 100vw !important;
+      overflow-x: hidden !important;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f7fb !important;
+    }
+
+    .app-container {
+      width: 100% !important;
+      max-width: 100vw !important;
+      overflow-x: hidden !important;
+      display: flex !important;
+    }
+
+    .app-sidebar {
+      width: var(--sidebar-width) !important;
+      flex-shrink: 0 !important;
+    }
+
+    .app-main {
+      flex: 1 !important;
+      margin-left: var(--sidebar-width) !important;
+      max-width: calc(100vw - var(--sidebar-width)) !important;
+      width: calc(100vw - var(--sidebar-width)) !important;
+      min-height: 100vh !important;
+      overflow-x: hidden !important;
+      position: relative !important;
+      background: transparent !important;
+    }
+
+    /* Completely delete any unwanted pseudo-element floating in the corner */
+    .app-main::before,
+    .app-main::after,
+    .app-topbar::before,
+    .app-topbar::after,
+    .topbar-actions::before,
+    .topbar-actions::after,
+    .view-header::before,
+    .view-header::after,
+    #report-output-box::before {
+      display: none !important;
+      content: none !important;
+      background: none !important;
+    }
+
+    /* Absolutely eradicate any floating watermark, pseudo-elements, corner images, or stray boxes */
+    .watermark-layer,
+    .watermark-emblem,
+    .app-main::before,
+    .app-main::after,
+    .app-topbar::before,
+    .app-topbar::after,
+    .topbar-actions::before,
+    .topbar-actions::after,
+    .view-header::before,
+    .view-header::after,
+    #report-output-box::before {
+      display: none !important;
+      content: none !important;
+      background: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    /* Topbar Responsive Fit */
+    .app-topbar {
+      height: var(--topbar-height) !important;
+      padding: 0 1rem !important;
+      gap: 0.6rem !important;
+      position: sticky !important;
+      top: 26px !important;
+      z-index: 90 !important;
+      background: rgba(255, 255, 255, 0.94) !important;
+      backdrop-filter: blur(10px) !important;
+    }
+
+    .sidebar-toggle-btn {
+      display: none;
+      background: none;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 0.3rem 0.6rem;
+      font-size: 1.15rem;
+      cursor: pointer;
+    }
+
+    .topbar-brand-badge {
+      flex-shrink: 0 !important;
+      padding: 0.25rem 0.65rem !important;
+    }
+
+    .global-search-container {
+      flex: 1 !important;
+      max-width: 320px !important;
+      min-width: 130px !important;
+      margin: 0 0.4rem !important;
+    }
+
+    .topbar-actions {
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.45rem !important;
+      flex-shrink: 0 !important;
+    }
+
+    .branch-select-wrap select, .user-select-wrap select {
+      max-width: 155px !important;
+      padding: 0.35rem 0.55rem !important;
+      font-size: 0.78rem !important;
+    }
+
+    .system-clock {
+      padding: 0.3rem 0.55rem !important;
+      font-size: 0.74rem !important;
+    }
+
+    /* Main Workspace Content Area */
+    .app-content {
+      padding: 1.25rem 1.5rem !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+      z-index: 1 !important;
+    }
+
+    /* Translucent Frosted Glass Dashboard Blocks & Reports */
+    .kpi-card,
+    .card,
+    #report-output-box {
+      background: rgba(255, 255, 255, 0.45) !important;
+      backdrop-filter: blur(14px) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
+      border: 1.5px solid rgba(244, 114, 182, 0.45) !important;
+      box-shadow: 0 8px 24px rgba(244, 114, 182, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+      border-radius: var(--radius-lg) !important;
+    }
+
+    .table-responsive {
+      background: transparent !important;
+    }
+
+    .kpi-card {
+      border-top: 4px solid #ec4899 !important;
+      padding: 1.15rem 1.25rem !important;
+      transition: all 0.25s ease !important;
+    }
+
+    .kpi-card:hover {
+      background: rgba(255, 255, 255, 0.72) !important;
+      border-color: #db2777 !important;
+      transform: translateY(-3px) !important;
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, rgba(255, 241, 242, 0.78) 0%, rgba(253, 242, 248, 0.58) 100%) !important;
+      border-bottom: 1.5px solid rgba(244, 114, 182, 0.35) !important;
+      padding: 1rem 1.25rem !important;
+    }
+
+    /* Ultra-Crisp, High-Contrast Typography */
+    .kpi-label, .card-title, .form-label, th {
+      color: #0f172a !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    .kpi-value {
+      font-size: 1.7rem !important;
+      color: #09121f !important;
+      font-weight: 800 !important;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.92) !important;
+    }
+
+    .kpi-meta, td {
+      color: #1e293b !important;
+      font-weight: 600 !important;
+    }
+
+    /* Smooth Responsive Tables - No Cutting Off or Spilling */
+    .table-responsive {
+      width: 100% !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      display: block !important;
+      border-radius: 8px !important;
+    }
+
+    .table {
+      width: 100% !important;
+      min-width: 680px !important;
+      margin-bottom: 0 !important;
+    }
+
+    .supplier-cards-grid {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+      gap: 1.25rem !important;
+    }
+
+    /* Mobile Sidebar Dim Backdrop */
+    .sidebar-mobile-backdrop {
+      display: none;
+    }
+
+    /* Screen Breakpoints for Laptop, Tablet, Mobile */
+    @media (max-width: 1024px) {
+      .sidebar-toggle-btn {
+        display: inline-flex !important;
+      }
+      .sidebar-mobile-backdrop {
+        display: block !important;
+        position: fixed !important;
+        inset: 0 !important;
+        background: rgba(10, 25, 45, 0.55) !important;
+        backdrop-filter: blur(4px) !important;
+        -webkit-backdrop-filter: blur(4px) !important;
+        z-index: 998 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transition: opacity 0.3s ease !important;
+      }
+      body.sidebar-open .sidebar-mobile-backdrop {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+      .software-bg-watermark-container {
+        left: 0 !important;
+      }
+      .app-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: 260px !important;
+        max-width: 82vw !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        z-index: 1000 !important;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35) !important;
+      }
+      body.sidebar-open .app-sidebar {
+        transform: translateX(0) !important;
+      }
+      .app-main {
+        margin-left: 0 !important;
+        max-width: 100vw !important;
+        width: 100vw !important;
+      }
+      .topbar-brand-text {
+        display: none !important;
+      }
+    }
+  </style>
+  <script>
+    // Active Purge: Remove any floating watermark or stray overlays immediately
+    function purgeStrayOverlays() {
+      document.querySelectorAll('.watermark-layer, .watermark-emblem').forEach(el => el.remove());
+    }
+    document.addEventListener('DOMContentLoaded', purgeStrayOverlays);
+    window.addEventListener('load', purgeStrayOverlays);
+    setTimeout(purgeStrayOverlays, 200);
+
+    // Seamlessly ensure live updates by connecting to local web server
+    if (window.location.protocol === 'file:') {
+      fetch('http://localhost:8080/index.html', { method: 'HEAD', cache: 'no-store' })
+        .then(r => {
+          if (r.ok) {
+            window.location.replace('http://localhost:8080/');
+          }
+        })
+        .catch(() => {});
+    }
+  </script>
+</head>
+<body>
+
+  <!-- Root Application Layout -->
+  <div class="app-container">
+
+    <!-- Mobile Sidebar Dim Backdrop Overlay -->
+    <div class="sidebar-mobile-backdrop" id="sidebar-mobile-backdrop" onclick="document.body.classList.remove('sidebar-open');"></div>
+
+    <!-- Left Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon-wrap">
+          <img src="assets/logo.jpg" alt="Usman Pharmacy & Cosmetics Logo" class="brand-logo-img">
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">USMAN</div>
+          <div class="brand-subtitle">PHARMACY & COSMETICS</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Core Operations</div>
+        <a class="nav-link active" data-tab="dashboard" onclick="app.navigateTo('dashboard')">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Owner Dashboard</span>
+        </a>
+
+        <!-- MANDATORY DEDICATED EXPIRY & ALERTS CENTER -->
+        <a class="nav-link nav-link-expiry" data-tab="expiry" onclick="app.navigateTo('expiry')">
+          <span class="nav-icon">🚨</span>
+          <span class="nav-text">Expiry & Alerts Center</span>
+          <span class="expiry-alert-count">0</span>
+        </a>
+
+        <a class="nav-link" data-tab="pos" onclick="app.navigateTo('pos')">
+          <span class="nav-icon">⚡</span>
+          <span class="nav-text">Smart POS & Billing (F2)</span>
+        </a>
+
+        <div class="nav-section-title">Catalog & Inventory</div>
+        <a class="nav-link" data-tab="inventory" onclick="app.navigateTo('inventory')">
+          <span class="nav-icon">💊</span>
+          <span class="nav-text">Pharmacy & Batches (FEFO)</span>
+        </a>
+
+        <a class="nav-link" data-tab="cosmetics" onclick="app.navigateTo('cosmetics')">
+          <span class="nav-icon">✨</span>
+          <span class="nav-text">Cosmetics & Beauty</span>
+        </a>
+
+        <a class="nav-link" data-tab="purchases" onclick="app.navigateTo('purchases')">
+          <span class="nav-icon">📦</span>
+          <span class="nav-text">Purchases & Suppliers</span>
+        </a>
+
+        <div class="nav-section-title">Financials & Governance</div>
+        <a class="nav-link" data-tab="accounting" onclick="app.navigateTo('accounting')">
+          <span class="nav-icon">💰</span>
+          <span class="nav-text">Accounting & Ledgers</span>
+        </a>
+
+        <a class="nav-link" data-tab="reports" onclick="app.navigateTo('reports')">
+          <span class="nav-icon">📑</span>
+          <span class="nav-text">19 Complete Reports</span>
+        </a>
+
+        <a class="nav-link" data-tab="staff" onclick="app.navigateTo('staff')">
+          <span class="nav-icon">👥</span>
+          <span class="nav-text">Staff & Audit Trail</span>
+        </a>
+
+        <a class="nav-link" data-tab="settings" onclick="app.navigateTo('settings')">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-text">Settings & Compliance</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar Footer with AI Quick Launch -->
+      <div class="sidebar-footer">
+        <button class="ai-launch-btn" id="btn-open-ai">
+          <span>🤖</span>
+          <span>Usman AI Voice (F9)</span>
+        </button>
+
+        <!-- Saima Mushtaq Designer Signature Credit -->
+        <div class="sidebar-designer-box">
+          <div class="sdb-title">DESIGN BY</div>
+          <div class="sdb-name">Saima Mushtaq</div>
+          <a href="mailto:saimbakar@gmail.com" class="sdb-mail" title="Email Designer">saimbakar@gmail.com</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Application Content Wrapper -->
+    <div class="app-main">
+
+      <!-- Full Software Background Logo Watermark -->
+      <div class="software-bg-watermark-container" aria-hidden="true">
+        <div class="software-bg-watermark-logo"></div>
+      </div>
+
+      <!-- Official Saima Mushtaq Designer Watermark Bar -->
+      <div class="saima-watermark-bar" id="saima-watermark-bar">
+        <div class="saima-wm-left">
+          <span class="saima-wm-badge">✨ OFFICIAL SOFTWARE</span>
+          <span class="saima-wm-sub">USMAN PHARMACY &amp; COSMETICS</span>
+        </div>
+        <div class="saima-wm-center">
+          <span class="saima-wm-tag">DESIGN BY</span>
+          <strong class="saima-wm-name">SAIMA MUSHTAQ</strong>
+        </div>
+        <div class="saima-wm-right">
+          <a href="mailto:saimbakar@gmail.com" class="saima-wm-email" title="Contact Saima Mushtaq">
+            <span class="saima-wm-icon">✉</span> saimbakar@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <!-- Top Sticky Navigation Bar -->
+      <header class="app-topbar">
+        <!-- Mobile/Compact Sidebar Toggle -->
+        <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" title="Toggle Navigation Menu" onclick="document.body.classList.toggle('sidebar-open');">
+          ☰
+        </button>
+
+        <!-- Store Brand Identity Pill in Header -->
+        <div class="topbar-brand-badge">
+          <img src="assets/logo.jpg" alt="Logo" class="topbar-logo-img">
+          <div class="topbar-brand-text">
+            <span class="topbar-title">USMAN PHARMACY</span>
+            <span class="topbar-tag">& COSMETICS STORE</span>
+          </div>
+        </div>
+
+        <!-- Global Omnibox Search -->
+        <div class="global-search-container">
+          <span class="global-search-icon">🔍</span>
+          <input type="text" id="global-search-input" class="global-search-input" placeholder="Search medicines, cosmetics, generic, batch, supplier, barcode (Ctrl+K)...">
+          <div class="global-search-results" id="global-search-results"></div>
+        </div>
+
+        <!-- Top Right Actions -->
+        <div class="topbar-actions">
+          <!-- Active Branch Switcher -->
+          <div class="branch-select-wrap">
+            <select id="header-branch-select" title="Active Branch"></select>
+          </div>
+
+          <!-- User Role Switcher -->
+          <div class="user-select-wrap">
+            <select id="header-user-select" title="Active Staff Role"></select>
+          </div>
+
+          <!-- Real-Time / Simulated Date Display -->
+          <div class="system-clock" id="system-date-display"></div>
+
+          <!-- Language Toggle Button -->
+          <button class="btn btn-outline btn-sm" id="lang-toggle-btn" title="Toggle Urdu / English">
+            اردو
+          </button>
+
+          <!-- Expiry Alert Bell Icon -->
+          <button class="topbar-icon-btn" title="View Expiry Alerts" onclick="app.navigateTo('expiry')">
+            🔔
+            <span class="bell-badge" id="top-bell-badge">0</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Dynamic Content Views -->
+      <main class="app-content">
+        <!-- Subtle Top Content Watermark Stamp -->
+        <div class="app-top-watermark-stamp" aria-hidden="true">
+          <div class="stamp-inner">
+            <span>DESIGN BY SAIMA MUSHTAQ</span>
+            <span class="stamp-email">saimbakar@gmail.com</span>
+          </div>
+        </div>
+
+        <section id="view-dashboard" class="view-section"></section>
+        <section id="view-expiry" class="view-section" style="display:none;"></section>
+        <section id="view-inventory" class="view-section" style="display:none;"></section>
+        <section id="view-cosmetics" class="view-section" style="display:none;"></section>
+        <section id="view-pos" class="view-section" style="display:none;"></section>
+        <section id="view-purchases" class="view-section" style="display:none;"></section>
+        <section id="view-accounting" class="view-section" style="display:none;"></section>
+        <section id="view-reports" class="view-section" style="display:none;"></section>
+        <section id="view-staff" class="view-section" style="display:none;"></section>
+        <section id="view-settings" class="view-section" style="display:none;"></section>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Usman AI Voice & Chat Assistant Drawer -->
+  <aside class="ai-drawer" id="ai-assistant-drawer">
+    <div class="ai-drawer-header">
+      <div class="ai-header-info">
+        <div class="ai-avatar">
+          <img src="assets/logo.jpg" alt="Usman AI" class="ai-avatar-img" width="40" height="40" style="width:40px;height:40px;max-width:40px;max-height:40px;border-radius:50%;object-fit:cover;display:block;">
+        </div>
+        <div>
+          <div class="font-bold text-base">Usman AI Clinical Assistant</div>
+          <div class="text-xs text-teal">عثمان فارمیسی اے آئی • Voice & Data</div>
+        </div>
+      </div>
+      <button class="ai-drawer-close" id="ai-drawer-close">×</button>
+    </div>
+
+    <!-- Verbal Audio Toolbar Controls -->
+    <div class="ai-audio-toolbar">
+      <label class="audio-toggle-wrap">
+        <input type="checkbox" id="ai-auto-speak-toggle" checked onchange="window.usmanAI.autoSpeak = this.checked;">
+        <span>Speak Responses Verbally</span>
+      </label>
+      <div class="d-flex align-center gap-2">
+        <span class="speaking-badge" id="ai-speaking-badge">
+          <span>🔊</span> Speaking...
+        </span>
+        <button class="btn btn-xs btn-outline" onclick="window.usmanAI.stopSpeaking()">Stop Audio</button>
+      </div>
+    </div>
+
+    <!-- Chat Messages Scroll Container -->
+    <div class="ai-chat-body" id="ai-chat-body">
+      <div class="ai-message ai-message-bot">
+        <div><strong>السلام علیکم! Hello!</strong> I am your <strong>Usman Pharmacy AI Assistant</strong>.</div>
+        <div class="mt-1 text-xs text-muted">
+          I have full live real-time access to your pharmacy's stock, expiry alerts, sales, gross profit, and DRAP clinical drug guidelines.
+        </div>
+        <div class="mt-2 text-xs">
+          🎙️ <em>Tap the microphone button to ask a question verbally, or type below. I will answer both with written data and verbal voice!</em>
+        </div>
+        <div class="ai-bot-actions">
+          <button class="btn-bot-speak" onclick="window.usmanAI.speakVerbal('Welcome to Usman Pharmacy! I am your AI assistant. You can ask me any question about expiring medicines, stock levels, or profits.')">
+            🔊 Listen
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Suggested Quick Action Pills -->
+    <div class="ai-suggested-pills">
+      <button class="ai-pill" onclick="app.sendQuickAiPrompt('Which medicines are expiring soon and what is the cost value?')">🚨 Expiring stock?</button>
+      <button class="ai-pill" onclick="app.sendQuickAiPrompt('Summarize today\'s net sales and gross profit')">📊 Today's profit?</button>
+      <button class="ai-pill" onclick="app.sendQuickAiPrompt('Check current active stock of Panadol and Augmentin')">💊 Panadol stock?</button>
+      <button class="ai-pill" onclick="app.sendQuickAiPrompt('List low stock items that need reordering from distributors')">📦 Reorder alerts?</button>
+      <button class="ai-pill" onclick="app.sendQuickAiPrompt('What is the dosage form and indications for Risek 20mg?')">🩺 Risek dosage?</button>
+    </div>
+
+    <!-- Microphone & Input Bar -->
+    <div class="ai-input-bar">
+      <!-- Visual Waveform Pulse when Recording -->
+      <div class="mic-wave-indicator" id="ai-mic-pulse">
+        <div class="wave-bars">
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+        </div>
+        <span>Listening to your voice... Speak now!</span>
+      </div>
+
+      <!-- Microphone Facility Button -->
+      <button class="ai-mic-btn" id="ai-mic-btn" title="Speak via Microphone" onclick="window.usmanAI.toggleMicrophone()">
+        🎤
+      </button>
+
+      <input type="text" id="ai-user-input" class="ai-text-input" placeholder="Ask AI via voice or type here..." onkeydown="if(event.key==='Enter') app.submitAiPrompt();">
+      
+      <button class="ai-send-btn" title="Send Question" onclick="app.submitAiPrompt()">
+        ➤
+      </button>
+    </div>
+  </aside>
+
+  <!-- Dynamic Modal Root -->
+  <div id="modal-root"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Core Scripts -->
+  <script src="js/db.js"></script>
+  <script src="js/expiry.js"></script>
+  <script src="js/inventory.js"></script>
+  <script src="js/pos.js"></script>
+  <script src="js/purchases.js"></script>
+  <script src="js/accounting.js"></script>
+  <script src="js/reports.js"></script>
+  <script src="js/ai-agent.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/views.js"></script>
+  <script src="js/modals-extra.js"></script>
+
+  <!-- AI Helper Handler -->
+  <script>
+    window.app.sendQuickAiPrompt = function(promptText) {
+      document.getElementById('ai-user-input').value = promptText;
+      window.app.submitAiPrompt();
+    };
+
+    window.app.submitAiPrompt = async function() {
+      const input = document.getElementById('ai-user-input');
+      const text = (input ? input.value : '').trim();
+      if (!text) return;
+
+      input.value = '';
+
+      // Append user bubble
+      const chatBody = document.getElementById('ai-chat-body');
+      const userBubble = document.createElement('div');
+      userBubble.className = 'ai-message ai-message-user';
+      userBubble.innerHTML = `<div>${text}</div><div class="text-xxs text-right mt-1 opacity-75">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>`;
+      chatBody.appendChild(userBubble);
+
+      // Loading bot bubble
+      const botBubble = document.createElement('div');
+      botBubble.className = 'ai-message ai-message-bot';
+      botBubble.innerHTML = `<div class="d-flex align-center gap-2"><span>🤖 Thinking & analyzing store telemetry...</span></div>`;
+      chatBody.appendChild(botBubble);
+      chatBody.scrollTop = chatBody.scrollHeight;
+
+      try {
+        const reply = await window.usmanAI.ask(text);
+        
+        // Format markdown to HTML
+        let formatted = reply
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\*(.*?)\*/g, '<em>$1</em>')
+          .replace(/`([^`]+)`/g, '<code>$1</code>')
+          .replace(/\n\n/g, '<br><br>')
+          .replace(/\n• /g, '<br>• ');
+
+        botBubble.innerHTML = `
+          <div>${formatted}</div>
+          <div class="ai-bot-actions">
+            <button class="btn-bot-speak" onclick="window.usmanAI.speakVerbal(\`${reply.replace(/[`"]/g, "'")}\`)">
+              🔊 Re-play Audio
+            </button>
+          </div>
+        `;
+      } catch (err) {
+        botBubble.innerHTML = `<div class="text-danger">Error: ${err.message}</div>`;
+      }
+
+      chatBody.scrollTop = chatBody.scrollHeight;
+    };
+  </script>
+</body>
+</html>
